@@ -37,8 +37,19 @@ export default class TerminalController {
     };
   }
 
+  #onLogChanged({ screen, activityLog }) {
+    return (msg) => {
+      const [userName] = msg.split(/\s/);
+      const collor = this.#getUserCollor(userName);
+
+      activityLog.addItem(`{${collor}}{bold}${msg.toString()}{/}`);
+      screen.render();
+    };
+  }
+
   #registerEvents(eventEmitter, components) {
     eventEmitter.on("message:received", this.#onMessageReceived(components));
+    eventEmitter.on("activityLog:updated", this.#onLogChanged(components));
   }
 
   async initializaTable(eventEmitter) {
@@ -59,25 +70,11 @@ export default class TerminalController {
     components.screen.render();
 
     setInterval(() => {
-      eventEmitter.emit("message:received", {
-        message: "Salve",
-        userName: "ManoBrow",
-      });
-
-      eventEmitter.emit("message:received", {
-        message: "quebrada",
-        userName: "IceBlue",
-      });
-
-      eventEmitter.emit("message:received", {
-        message: "iae",
-        userName: "KlJay",
-      });
-
-      eventEmitter.emit("message:received", {
-        message: "opa",
-        userName: "EdiRock",
-      });
+      eventEmitter.emit("activityLog:updated", "ManoBrow join");
+      eventEmitter.emit("activityLog:updated", "ManoBrow left");
+      eventEmitter.emit("activityLog:updated", "IceBlue join");
+      eventEmitter.emit("activityLog:updated", "IceBlue left");
+      eventEmitter.emit("activityLog:updated", "KlJay join");
     }, 1000);
   }
 }
