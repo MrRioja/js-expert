@@ -95,7 +95,7 @@ export default class ComponentsBuilder {
   }
 
   setActivityLogComponent() {
-    this.#status = blessed.list({
+    this.#activityLog = blessed.list({
       ...this.#baseComponent(),
       parent: this.#layout,
       width: "25%",

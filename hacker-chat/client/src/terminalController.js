@@ -1,4 +1,5 @@
 import ComponentsBuilder from "./components.js";
+import { constants } from "./constants.js";
 export default class TerminalController {
   #usersCollors = new Map();
 
@@ -47,9 +48,37 @@ export default class TerminalController {
     };
   }
 
+  #onStatusChanged({ screen, status }) {
+    return (users) => {
+      const { content } = status.items.shift();
+
+      status.clearItems();
+      status.addItem(content);
+
+      users.forEach((userName) => {
+        const collor = this.#getUserCollor(userName);
+        status.addItem(`{${collor}}{bold}${userName}{/}`);
+      });
+
+      screen.render();
+    };
+  }
+
   #registerEvents(eventEmitter, components) {
-    eventEmitter.on("message:received", this.#onMessageReceived(components));
-    eventEmitter.on("activityLog:updated", this.#onLogChanged(components));
+    eventEmitter.on(
+      constants.events.app.MESSAGE_RECEIVED,
+      this.#onMessageReceived(components)
+    );
+
+    eventEmitter.on(
+      constants.events.app.ACTIVITYLOG_UPDATED,
+      this.#onLogChanged(components)
+    );
+
+    eventEmitter.on(
+      constants.events.app.STATUS_UPDATED,
+      this.#onStatusChanged(components)
+    );
   }
 
   async initializaTable(eventEmitter) {
@@ -68,13 +97,5 @@ export default class TerminalController {
 
     components.input.focus();
     components.screen.render();
-
-    setInterval(() => {
-      eventEmitter.emit("activityLog:updated", "ManoBrow join");
-      eventEmitter.emit("activityLog:updated", "ManoBrow left");
-      eventEmitter.emit("activityLog:updated", "IceBlue join");
-      eventEmitter.emit("activityLog:updated", "IceBlue left");
-      eventEmitter.emit("activityLog:updated", "KlJay join");
-    }, 1000);
   }
 }
