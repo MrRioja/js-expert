@@ -1,4 +1,4 @@
-export default constants = {
+export const constants = {
   event: {
     MESSAGE: "message",
     NEW_USER_CONNECTED: "newUserConnected",
