@@ -1,21 +1,22 @@
 import ComponentsBuilder from "./components.js";
 import { constants } from "./constants.js";
+
 export default class TerminalController {
-  #usersCollors = new Map();
+  #usersColors = new Map();
 
-  contructor() {}
+  constructor() {}
 
-  #pickCollor() {
+  #pickColor() {
     return "#" + (((1 << 24) * Math.random()) | 0).toString(16) + "-fg";
   }
 
-  #getUserCollor(userName) {
-    if (this.#usersCollors.has(userName)) {
-      return this.#usersCollors.get(userName);
+  #getUserColor(userName) {
+    if (this.#usersColors.has(userName)) {
+      return this.#usersColors.get(userName);
     }
 
-    const color = this.#pickCollor();
-    this.#usersCollors.set(userName, color);
+    const color = this.#pickColor();
+    this.#usersColors.set(userName, color);
 
     return color;
   }
@@ -23,7 +24,7 @@ export default class TerminalController {
   #onInputReceived(eventEmitter) {
     return function () {
       const message = this.getValue();
-      console.log(message);
+      eventEmitter.emit(constants.events.app.MESSAGE_SENT, message);
       this.clearValue();
     };
   }
@@ -31,9 +32,9 @@ export default class TerminalController {
   #onMessageReceived({ screen, chat }) {
     return (msg) => {
       const { userName, message } = msg;
-      const collor = this.#getUserCollor(userName);
+      const color = this.#getUserColor(userName);
 
-      chat.addItem(`{${collor}}{bold}${userName}{/}: ${message}`);
+      chat.addItem(`{${color}}{bold}${userName}{/}: ${message}`);
       screen.render();
     };
   }
@@ -41,9 +42,9 @@ export default class TerminalController {
   #onLogChanged({ screen, activityLog }) {
     return (msg) => {
       const [userName] = msg.split(/\s/);
-      const collor = this.#getUserCollor(userName);
-
-      activityLog.addItem(`{${collor}}{bold}${msg.toString()}{/}`);
+      const color = this.#getUserColor(userName);
+      console.log("Salve");
+      activityLog.addItem(`{${color}}{bold}${msg.toString()}{/}`);
       screen.render();
     };
   }
@@ -56,8 +57,8 @@ export default class TerminalController {
       status.addItem(content);
 
       users.forEach((userName) => {
-        const collor = this.#getUserCollor(userName);
-        status.addItem(`{${collor}}{bold}${userName}{/}`);
+        const color = this.#getUserColor(userName);
+        status.addItem(`{${color}}{bold}${userName}{/}`);
       });
 
       screen.render();
