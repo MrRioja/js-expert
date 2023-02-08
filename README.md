@@ -19,13 +19,29 @@
 
 Projeto desenvolvido durante a semana JS Expert 03 cujo objetivo foi criar um chat de terminal.
 
+![Wallpaper](.github/wallpaper.jpg)
+
 ## JS Expert III
 
 Chat de CLI em real-time construído com Javascript durante evento JS Expert III.
 
-Durante essa semana entendemos na pratica como construir CLI utilizando Javascript. Para isso utilizamos um projeto prático onde construímos um chat de linha de comando, como ilustrado abaixo:
+Durante essa semana entendemos na pratica como construir CLI utilizando Javascript. Para isso utilizamos um projeto prático onde construímos um chat de linha de comando.
 
-![Wallpaper](./wallpaper.jpg)
+Para ver o app em funcionamento precisamos subir o servidor e logo após conectarmos como clientes em instâncias de terminal diferentes.
+
+No arquivos `package.json` da pasta `client`, na seção _scripts_ temos os usuários previamente cadastrados para executarmos nossa aplicação. Você pode alterar as salas que os usuários serão direcionados e alterar os nomes também, como preferir.
+
+Vamos agora ver como o projeto funciona com o GIf abaixo:
+
+![Demonstração do app](.github/demo.gif)
+
+O primeiro terminal é o terminal que inicializa o servidor e recebe os logs de usuários que conectaram e desconectaram da aplicação. No terminal a direita do server em execução, 'logamos' na aplicação como `user01` e nos terminais seguintes como `user02` e `user03`.
+
+Em cada instância do chat teremos três colunas e o campo para o usuário digitar sua mensagem, onde da esquerda para a direita representam:
+
+- Todas as mensagens enviadas na sala pelo o usuário logado e pelos outros usuários presente na sala.
+- Logs de atividades: Indicará quando usuários conectarem e desconectarem da sala atual.
+- Usuário atualmente logados e conectados na sala atual.
 
 ## Instalação
 
