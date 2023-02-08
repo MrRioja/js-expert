@@ -1,13 +1,19 @@
 {
-  "name": "client",
-  "version": "1.0.0",
+  "name": "@erickwendel/hacker-chat-client",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "hacker-chat": "index.js"
+  },
   "scripts": {
-    "start": "node index.js",
-    "user1": "node index.js --username mrrioja --room sala01 --hostUri http://localhost:9898",
-    "user2": "node index.js --username kielkow --room sala01 --hostUri http://localhost:9898",
+    "user01": "node index.js --username user01 --room sala01 --hostUri http://localhost:9898",
+    "user02": "node index.js --username user02 --room sala01 --hostUri http://localhost:9898",
+    "user03": "node index.js --username user03 --room sala02 --hostUri http://localhost:9898",
+    "user04": "node index.js --username user04 --room sala02 --hostUri http://localhost:9898",
+    "user05": "node index.js --username user05 --room sala02 --hostUri http://localhost:9898",
+    "user06": "node index.js --username user06 --room sala02 --hostUri http://localhost:9898",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
